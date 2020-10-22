@@ -1,2 +1,5 @@
 # server node modules
 server/node_modules
+
+# server environmental variables file
+server/.env
