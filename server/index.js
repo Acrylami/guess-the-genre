@@ -6,7 +6,7 @@ const io = require('socket.io')(server);
 const {spawn} = require('child_process');
 
 
-app.use(express.json(), express.urlencoded({extended: true}));
+//app.use(express.json(), express.urlencoded({extended: true}));
 
 
 
