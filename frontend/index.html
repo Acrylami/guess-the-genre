@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <title>Game name</title>
+    <link rel="stylesheet" href="./auth.css">
+    <link rel="stylesheet" href="./game.css">
+    <link rel="stylesheet" href="./body.css">
+    <link rel="stylesheet" href="./roller.css">
+    <script src="./script.js"></script>
+    <script src="./socketio.js"></script>
+  </head>
+  <body>
+      <main class='game-content'>
+          <section class='auth'>
+              <div class='submit-wrapper'>
+                  <div class='greeting'>
+                  </div>
+                  <div class='game-id'>
+                      <label for='submit-game-id'>Type it right there:</label>
+                      <input id='submit-game-id' class='submit-game-id' type='text'/>
+                  </div>
+                  <div class='nickname'>
+                      <label for='submit-nickname'>Your nickname as well, please:</label>
+                      <input id='submit-nickname' class='submit-nickname' type='text'/>
+                  </div>
+                  <input type='button' value='Find the game' class='game-finder'/>
+              </div>
+
+              <div class='host-wrapper'>
+                  <div class='host-greeting'>
+                      <p>Or maybe you'd like to host a game?</p>
+                  </div>
+                  <div class='game-id'>
+                      <label for='submit-topic'>Suggest a topic right there:</label>
+                      <input id='submit-game-topic' class='submit-game-topic' type='text'/>
+                  </div>
+                  <input type='button' value='Take me to the game!' class='game-starter'/>
+              </div>
+          </section>
+
+          <section class='spinner'>
+              <div class="lds-roller">
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+              </div>
+          </section>
+
+          <section class='game'>
+              <section class='for-host nodisplay'>
+                  <div class='slight-padding host-info-wrapper'>
+                      <p>Your game id is: still fetching </p>
+                      <p>Your topic for the game is: your topic </p>
+                  </div>
+                  <div class='slight-padding story-wrapper'>
+                      <p>The story on your topic is: </p>
+                      <p>bla-bla-bla </p>
+                  </div>
+                  <div class='slight-padding suggestions-wrapper'>
+                      <p>Suggestions from your players: </p>
+                      <p>Nothing for now! </p>
+                  </div>
+                  <div class='slight-padding roomview-wrapper'>
+                      <p>People in your room:</p>
+                  </div>
+              </section>
+
+              <section class='for-player nodisplay'>
+                  <div class='slight-padding player-info-wrapper'>
+                      <p>Your game id is: still fetching </p>
+                      <p>Your topic for the game is: your topic </p>
+                  </div>
+                  <div class='slight-padding story-wrapper'>
+                      <p>The story on your topic is: </p>
+                      <p>bla-bla-bla </p>
+                  </div>
+                  <div class='slight-padding suggestions-wrapper'>
+                      <p>Suggestions from your players: </p>
+                      <p>Nothing for now! </p>
+                  </div>
+                  <div class='slight-padding roomview-wrapper'>
+                      <p>People in your room:</p>
+                  </div>
+              </section>
+          </section>
+      </main>
+  </body>
+</html>

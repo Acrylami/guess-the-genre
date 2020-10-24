@@ -1,0 +1,28 @@
+.auth {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    grid-gap: 10px;
+
+    grid-template-areas: 
+                         '.  .   .  .'
+                         '. sub sub .'
+                         '. hos hos .'
+                         '.  .   .  .';
+}
+
+.submit-wrapper, .host-wrapper {
+    display: flex;
+    border: 2px solid black;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.submit-wrapper {
+    grid-area: sub;
+}
+
+.host-wrapper {
+    grid-area: hos;
+}

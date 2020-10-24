@@ -1,0 +1,29 @@
+body {
+    height: 90vh;
+    width: 300%;
+}
+
+.game-content {
+    display: flex;
+    justify-content: space-around;
+    /* overflow: hidden; */
+    transition: 0.5s ease-in-out;
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+
+.auth, .spinner, .game {
+    width: 30%;
+    height: 100%;
+    box-sizing: border-box;
+    border: 2px solid black;
+}
+
+.nodisplay {
+    display: none;
+}
+
+.slight-padding {
+    padding: 5px;
+}
