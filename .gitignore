@@ -1,5 +1,10 @@
 # server node modules
 server/node_modules
 
+
 # server environmental variables file
 server/.env
+
+# Vim swap files from Jorres' machine
+*.sw*
+
