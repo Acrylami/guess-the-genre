@@ -11,6 +11,7 @@ io.on('connection', (socket) => {
   let output;
   let hostEmail;
   let hostTopic;
+  let players = [];
   console.log('connected to socket.io successfully');
 
   socket.on('get-topic-ideas', () => {
@@ -26,6 +27,7 @@ io.on('connection', (socket) => {
 
     socket.join(hostEmail);
     socket.join(newRoom, () => {
+      players.push(hostName);
       socket.emit('receive-game-id', newRoom);
       createStory(topic, socket,output);
     });
@@ -35,7 +37,8 @@ io.on('connection', (socket) => {
     let [username, roomName] = values;
     if(io.sockets.adapter.rooms[roomName]){
       socket.join(roomName, () => {
-        socket.emit('room-state', 'some values');
+        players.push(username);
+        socket.emit('room-state', players);
         socket.to(roomName).emit('user-joined-room', username);
       });
 
