@@ -5,36 +5,61 @@ const server = require('http').createServer(app);
 const io = require('socket.io')(server);
 const {spawn} = require('child_process');
 
-
-//app.use(express.json(), express.urlencoded({extended: true}));
-
-
+let id = 0;
 
 io.on('connection', (socket) => {
+  let output;
+  let hostEmail;
+  let hostTopic;
   console.log('connected to socket.io successfully');
-  let id = 0;
-  socket.on('create-room', (name) => {
+
+  socket.on('get-topic-ideas', () => {
+    let topics = ['action','drama','fantasy','sci-fi','sports','biography'];
+    socket.emit('receive-topic-ideas', topics);
+  });
+  socket.on('create-room', (values) => {
     id++;
+    let [hostName, topic, email] = values;
+    hostEmail = email;
+    hostTopic = topic;
     let newRoom = `room ${id}`;
+
+    socket.join(hostEmail);
     socket.join(newRoom, () => {
-      io.in(newRoom).emit('user-joined-room', `${name} entered ${newRoom}`);
+      socket.emit('receive-game-id', newRoom);
+      createStory(topic, socket,output);
     });
 
   });
   socket.on('join-room', (values) => {
-    let [username, roomName] = values.split('|');
-    socket.join(roomName, () => {
-      io.in(roomName).emit('user-joined-room', `${username} entered ${roomName}`);
-    });
+    let [username, roomName] = values;
+    if(io.sockets.adapter.rooms[roomName]){
+      socket.join(roomName, () => {
+        socket.emit('room-state', 'some values');
+        socket.to(roomName).emit('user-joined-room', username);
+      });
+
+    }else{
+      socket.emit('room-state', 'room-not-found');
+    }
+
   });
-  socket.on('create-story', (values) => {
-    let [topic, roomName] = values.split('|');
-    createStory(topic, roomName);
+  socket.on('send-story',(roomName) =>{
+    socket.to(roomName).emit('receive-story',output);
+  });
+  socket.on('submit-topic-idea', (values) => {
+    socket.to(hostEmail).emit('receive-topic-idea',values)
+  });
+  socket.on('host-picked-topic', (values) =>{
+    let[roomName, ...rest] = values;
+    socket.to(roomName).emit('receive-winning-topic', rest);
   });
 
 });
-function createStory(topic, roomName){
-  let output;
+
+
+
+function createStory(topic,socket,output){
   let python = spawn('python', ['some python file', topic]);
   python.stdout.on('data', (data) => {
     console.log('pipe data from python script');
@@ -42,7 +67,7 @@ function createStory(topic, roomName){
   });
   python.on('close', (code) => {
     console.log(`child process close all stdio with code ${code}`);
-    io.in(roomName).emit('get-story', output);
+    socket.emit('get-story', output);
   })
 
 }
