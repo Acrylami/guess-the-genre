@@ -1,2 +1,5 @@
 # server node modules
 server/node_modules
+
+# Vim swap files from Jorres' machine
+*.sw*
