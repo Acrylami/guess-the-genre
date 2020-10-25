@@ -4,14 +4,12 @@ const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
 const {spawn} = require('child_process');
+const {createStoreValue, getValueFromStore, deleteValueFromStore, addPlayer} = require('./store');
 
 let id = 0;
 
 io.on('connection', (socket) => {
   let output;
-  let hostEmail;
-  let hostTopic;
-  let players = [];
   console.log('connected to socket.io successfully');
 
   socket.on('get-topic-ideas', () => {
@@ -21,13 +19,11 @@ io.on('connection', (socket) => {
   socket.on('create-room', (values) => {
     id++;
     let [hostName, topic, email] = values;
-    hostEmail = email;
-    hostTopic = topic;
     let newRoom = `room ${id}`;
+    createStoreValue(newRoom,email,topic,hostName);
 
-    socket.join(hostEmail);
+    socket.join(email);
     socket.join(newRoom, () => {
-      players.push(hostName);
       socket.emit('receive-game-id', newRoom);
       createStory(topic, socket,output);
     });
@@ -37,8 +33,9 @@ io.on('connection', (socket) => {
     let [username, roomName] = values;
     if(io.sockets.adapter.rooms[roomName]){
       socket.join(roomName, () => {
-        players.push(username);
-        socket.emit('room-state', players);
+        addPlayer(roomName, username);
+        let roomDetails = getValueFromStore(roomName);
+        socket.emit('room-state', roomDetails.players);
         socket.to(roomName).emit('user-joined-room', username);
       });
 
@@ -51,7 +48,9 @@ io.on('connection', (socket) => {
     socket.to(roomName).emit('receive-story',output);
   });
   socket.on('submit-topic-idea', (values) => {
-    socket.to(hostEmail).emit('receive-topic-idea',values)
+    let [roomName, ...rest] = values;
+    let roomDetails = getValueFromStore(roomName);
+    socket.to(roomDetails.hostEmail).emit('receive-topic-idea',values)
   });
   socket.on('host-picked-topic', (values) =>{
     let[roomName, ...rest] = values;
