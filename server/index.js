@@ -18,9 +18,9 @@ io.on('connection', (socket) => {
   });
   socket.on('create-room', (values) => {
     id++;
-    let [hostName, topic, email] = values;
+    let [hostName, topic, hostId] = values;
     let newRoom = `room ${id}`;
-    createStoreValue(newRoom,email,topic,hostName);
+    createStoreValue(newRoom,hostId,topic,hostName);
 
     socket.join(email);
     socket.join(newRoom, () => {
@@ -50,7 +50,7 @@ io.on('connection', (socket) => {
   socket.on('submit-topic-idea', (values) => {
     let [roomName, ...rest] = values;
     let roomDetails = getValueFromStore(roomName);
-    socket.to(roomDetails.hostEmail).emit('receive-topic-idea',values)
+    socket.to(roomDetails.hostId).emit('receive-topic-idea',values)
   });
   socket.on('host-picked-topic', (values) =>{
     let[roomName, ...rest] = values;

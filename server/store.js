@@ -1,7 +1,7 @@
 const hostStore = {};
 
-exports.createStoreValue = (roomName, hostEmail, hostTopic, hostName) => {
-  hostStore[roomName] = {hostEmail, hostTopic,players: [hostName]};
+exports.createStoreValue = (roomName, hostId, hostTopic, hostName) => {
+  hostStore[roomName] = {hostId, hostTopic,players: [hostName]};
 }
 
 exports.addPlayer = (roomName, name) =>{
