@@ -56,6 +56,9 @@ io.on('connection', (socket) => {
     let[roomName, ...rest] = values;
     socket.to(roomName).emit('receive-winning-topic', rest);
   });
+  socket.on('close-room', (roomName) => {
+    deleteValueFromStore(roomName);
+  })
 
 });
 
