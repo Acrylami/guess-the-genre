@@ -22,7 +22,7 @@ io.on('connection', (socket) => {
     let newRoom = `room ${id}`;
     createStoreValue(newRoom,hostId,topic,hostName);
 
-    socket.join(email);
+    socket.join(hostId);
     socket.join(newRoom, () => {
       socket.emit('receive-game-id', newRoom);
       createStory(topic, socket,output);
