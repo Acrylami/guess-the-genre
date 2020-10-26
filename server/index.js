@@ -5,6 +5,7 @@ const server = require('http').createServer(app);
 const io = require('socket.io')(server);
 const {spawn} = require('child_process');
 const {createStoreValue, getValueFromStore, deleteValueFromStore, addPlayer} = require('./store');
+const {testTopics, testeStories} = require('./test-data');
 
 let id = 0;
 
@@ -13,8 +14,7 @@ io.on('connection', (socket) => {
   console.log('connected to socket.io successfully');
 
   socket.on('get-topic-ideas', () => {
-    let topics = ['action','drama','fantasy','sci-fi','sports','biography'];
-    socket.emit('receive-topic-ideas', topics);
+    socket.emit('receive-topic-ideas', testTopics);
   });
   socket.on('create-room', (values) => {
     id++;
@@ -62,15 +62,20 @@ io.on('connection', (socket) => {
 
 
 function createStory(topic,socket,output){
-  let python = spawn('python', ['some python file', topic]);
-  python.stdout.on('data', (data) => {
-    console.log('pipe data from python script');
-    output = data.toString();
-  });
-  python.on('close', (code) => {
-    console.log(`child process close all stdio with code ${code}`);
-    socket.emit('get-story', output);
-  })
+  if(topic === 'sci-fi'){
+    topic = 'sci_fi';
+  }
+  output = testeStories[topic];
+  socket.emit('get-story', output);
+  // let python = spawn('python', ['some python file', topic]);
+  // python.stdout.on('data', (data) => {
+  //   console.log('pipe data from python script');
+  //   output = data.toString();
+  // });
+  // python.on('close', (code) => {
+  //   console.log(`child process close all stdio with code ${code}`);
+  //   socket.emit('get-story', output);
+  // })
 
 }
 
