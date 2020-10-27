@@ -135,7 +135,7 @@ const init = () => {
     fillGreeting(greeting);
     loadTopics();
     const body = find('.game-content');
-    
+
     const finder = find('.game-finder');
     finder.addEventListener('click', () => {
         const userNickname = find('.submit-nickname').value;
@@ -159,12 +159,12 @@ const init = () => {
         if (!hostNickname) {
             pulse('.submit-host-nickname', 'red');
             return;
-        } 
+        }
         if (findAll('.selected').length == 0) {
             pulse('.selectable-topic', 'red');
             return;
         }
-        
+
         takeToWindow(1);
         fillGameFor('host');
         createRoom(hostNickname);

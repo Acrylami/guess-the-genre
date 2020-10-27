@@ -24,7 +24,8 @@ io.on('connection', (socket) => {
     socket.join(hostId);
     socket.join(newRoom, () => {
       socket.emit('receive-game-id', newRoom);
-      createStory(topic, socket,output);
+      socket.emit('user-joined-room', hostName);
+      output = createStory(topic, socket);
       createStoreValue(newRoom,hostId,topic,hostName, output);
     });
 
@@ -65,12 +66,14 @@ io.on('connection', (socket) => {
 
 
 
-function createStory(topic,socket,output){
+function createStory(topic,socket){
+  let output;
   if(topic === 'sci-fi'){
     topic = 'sci_fi';
   }
   output = testStories[topic];
   socket.emit('get-story', output);
+  return output;
   // let python = spawn('python', ['some python file', topic]);
   // python.stdout.on('data', (data) => {
   //   console.log('pipe data from python script');
