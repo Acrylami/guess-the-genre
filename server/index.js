@@ -51,7 +51,7 @@ io.on('connection', (socket) => {
   socket.on('submit-topic-idea', (values) => {
     let [roomName, ...rest] = values;
     let roomDetails = getValueFromStore(roomName);
-    socket.to(roomDetails.hostId).emit('receive-topic-idea',values)
+    socket.to(roomDetails.hostId).emit('receive-topic-idea',rest);
   });
   socket.on('host-picked-topic', (values) =>{
     let[roomName, ...rest] = values;
