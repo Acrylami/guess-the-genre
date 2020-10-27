@@ -1,0 +1,46 @@
+// game-id :: [player-name]|[room-id]
+// only-id :: room-id
+// values :: array values in the form of [palyer-name, topic-guessed, was-guessed-topic-correct]
+//
+// get-topic-ideas
+//     args: no
+//
+// receive-topic-ideas
+//     args: [topic1,topic2,topic3,...]
+//
+// create-room
+//     args: [host-name,topic,host-email] // email is needed to privately send topic guesses from other players to the host, for testing it can be fake
+//
+// receive-game-id
+//     args: only-id
+//
+// join-room
+//     args: [username,room-id]
+//
+// room-state
+//     args: room-not-found // emitted if user tried to join a room not created
+//     args: [player1,player2,player3,...] // emitted if user joined an already created room
+//
+// user-joined-room
+//     args: username // for people already in the room
+//
+// send-story
+//     args: room-id
+//
+// receive-story:
+//     args: [story, a long string] // emitted to every player except the host
+// 
+// get-story
+//     args: [story, a long string] // would work later, only host receives this
+//
+// submit-topic-idea
+//     args: [room-id, player-name, topic-idea]
+//
+// receive-topic-idea
+//     args: [player-name,topic-idea]   // filtering unique at the frontend, host doesn't see player names, emitted to host privately using host email
+//
+// host-picked-topic
+//     args: [room-id, final values]
+//
+// receive-winning-topic
+//     args: [values]

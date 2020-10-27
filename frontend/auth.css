@@ -1,7 +1,7 @@
 .auth {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(4, 1fr);
+    grid-template-columns: 1fr 2fr 2fr 1fr;
+    grid-template-rows: 1fr 2fr 2fr 1fr;
     grid-gap: 10px;
 
     grid-template-areas: 
@@ -25,4 +25,25 @@
 
 .host-wrapper {
     grid-area: hos;
+}
+
+.selectable-topic {
+    border: 1px solid black;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.hover-shadow:hover {
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
+.selected {
+    background-color: lightgreen;
+}
+
+.host-topics {
+    height: 10vh;
+    overflow-y: scroll;
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
 }

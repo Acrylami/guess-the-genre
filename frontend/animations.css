@@ -1,0 +1,35 @@
+@keyframes pulsegreen {
+  0% {
+    background-color: white;
+  }
+  50% {
+    background-color: lightgreen;
+  }
+  100% {
+    background-color: white;
+  }
+}
+
+@keyframes pulsered {
+  0% {
+    background-color: white;
+  }
+  50% {
+    background-color: red;
+  }
+  100% {
+    background-color: white;
+  }
+}
+
+@keyframes pulseyellow {
+  0% {
+    background-color: white;
+  }
+  50% {
+    background-color: #FFBF00;
+  }
+  100% {
+    background-color: white;
+  }
+}

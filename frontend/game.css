@@ -1,16 +1,27 @@
-.for-host {
+.for-host, .for-player {
     width: 100%;
     height: 100%;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(4, 1fr);
     grid-gap: 10px;
+}
 
+.for-host {
     grid-template-areas: 
                          'inf inf inf inf'
                          'rom sto sto sto'
-                         'rom sug sug sug'
-                         'rom   .   .   . ';
+                         'rom sto sto sto'
+                         'rom sug sug sug';
+
+}
+
+.for-player {
+    grid-template-areas: 
+                         'inf inf inf inf'
+                         'rom sto sto sto'
+                         'rom sto sto sto'
+                         'rom sug sug sug';
 }
 
 .host-info-wrapper, .player-info-wrapper, .roomview-wrapper, .suggestions-wrapper, .story-wrapper {
@@ -39,4 +50,23 @@
 
 .story-wrapper {
     grid-area: sto;
+}
+
+.topic-selector {
+    width: 90%;
+    border: 2px solid blue;
+    overflow-y: scroll;
+
+    display: flex;
+    flex-direction: row;
+    height: 8vw;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.topic-suggestion {
+    width: 100px;
+    border: 2px solid black;
+    border-radius: 10px;
+    height: 60%;
 }
