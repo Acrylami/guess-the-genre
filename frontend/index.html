@@ -15,6 +15,15 @@
     <script src="./script.js"></script>
   </head>
   <body>
+      <aside class='win-screen nodisplay'>
+          <p>The game is finished!</p>
+          <p>And the winning suggestion is...</p>
+          <p class='winning-topic'></p>
+          <p class='congrats nodisplay'>Congratulations! Your answer was correct!</p>
+          <p class='failure nodisplay'>It's okay to be wrong once in a while! You'll get it right next time!</p>
+          <p class='host-finish nodisplay'>Wonderful game! Thank you for being a host!</p>
+          <p>Thank you for the game! Please refresh your page if you want to play once more!</p>
+      </aside>
       <main class='game-content'>
           <section class='auth'>
               <div class='submit-wrapper'>
@@ -72,7 +81,8 @@
                   </div>
                   <div class='slight-padding suggestions-wrapper'>
                       <p>Suggestions from your players: </p>
-                      <p>Nothing for now! </p>
+                      <div class='suggestions-container'> 
+                      </div>
                   </div>
                   <div class='slight-padding roomview-wrapper'>
                       <p>People in your room:</p>

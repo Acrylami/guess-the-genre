@@ -4,13 +4,16 @@ const onNotFound = ['We welcome you at the game!', 'But your game was not found 
 const setSuggestions = () => {
     const pickContainer = find('.topic-selector');
     gameState.topics.forEach(topic => {
-        const topicPar = createPar(topic, ['topic-suggestion', 'hover-shadow']);
-        pickContainer.appendChild(topicPar);
-        topicPar.addEventListener('click', () => {
+        const topicSuggestion = createNiceRectangleDiv(topic, ['nice-div', 'hover-shadow']);
+        pickContainer.appendChild(topicSuggestion);
+        topicSuggestion.addEventListener('click', () => {
             socket.emit('submit-topic-idea', [gameState.id, gameState.nickname, topic]);
+            gameState.submittedTopic = topic;
             pickContainer.innerHTML = '';
             const alreadySubmitted = createPar('You submitted a topic: ' + topic);
             pickContainer.appendChild(alreadySubmitted);
+            const waitHint = createPar('Wait for the host to resolve the match!');
+            pickContainer.appendChild(waitHint);
         });
     });
 };
@@ -108,7 +111,10 @@ const onSearchFailed = () => {
 
 const populatePlayers = (players) => {
     players.forEach(player => {
-        addPlayerToRoom(player);
+        if (!gameState.roommates.has(player)) {
+            addPlayerToRoom(player);
+            gameState.roommates.add(player);
+        }
     });
 };
 
@@ -149,6 +155,7 @@ const init = () => {
             return;
         }
 
+        gameState.nickname = userNickname;
         gameState.id = roomId;
         findRoom(userNickname, roomId);
     });
@@ -165,6 +172,7 @@ const init = () => {
             return;
         }
 
+        gameState.nickname = hostNickname;
         takeToWindow(1);
         fillGameFor('host');
         createRoom(hostNickname);

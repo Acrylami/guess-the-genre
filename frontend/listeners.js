@@ -13,32 +13,25 @@ const listenForNewStory = () => {
 };
 
 const listenForWinnerTopic = () => {
-    socket.on('receive-winning-topic', ([topicIdea]) => {
-        console.log(topicIdea);
+    socket.on('receive-winning-topic', (topicIdea) => {
+        showWinningScreen(topicIdea);
     });
 };
 
-let firstSuggestion = true;
 const listenForStorySuggestion = () => {
     socket.on('receive-topic-idea', (playerName, topicIdea) => {
-        const suggestions = find('.suggestions-wrapper');
-        if (firstSuggestion) {
-            const suggestionsTitle = createPar('Suggestions from your players');
-            suggestions.innerHTML = "";
-            suggestions.appendChild(suggestionsTitle);
-            firstSuggestion = false;
-        }
-
-        const suggestion = createPar(topicIdea, ['hover-shadow']);
+        const suggestions = find('.suggestions-container');
+        const suggestion = createNiceRectangleDiv(topicIdea, ['nice-div', 'hover-shadow']);
         suggestion.addEventListener('click', () => {
-            socket.emit('host-picked-topic', [gameState.id, [topicIdea]]);
+            socket.emit('host-picked-topic', [gameState.id, topicIdea]);
+            showWinningScreen(topicIdea);
         });
         suggestions.appendChild(suggestion);
     });
 }
 
-let playerEvents = ['user-joined-room', 'receive-story'];
-let hostEvents = ['user-joined-room'];
+let playerEvents = ['user-joined-room', 'receive-story', 'receive-winning-topic'];
+let hostEvents = ['user-joined-room', 'receive-topic-idea'];
 
 const setUpPlayerListeners = () => {
     listenForUserJoined();

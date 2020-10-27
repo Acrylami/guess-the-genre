@@ -26,3 +26,21 @@ body {
 .slight-padding {
     padding: 5px;
 }
+
+.win-screen {
+    position: absolute;
+    width: 96vw;
+    height: 94vh;
+    border: 2px solid black;
+    top: 1vh;
+    left: 1vw;
+    
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    background-color: white;
+    z-index: 2;
+
+    display: none;
+}
