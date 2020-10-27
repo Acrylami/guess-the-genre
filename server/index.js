@@ -5,7 +5,7 @@ const server = require('http').createServer(app);
 const io = require('socket.io')(server);
 const {spawn} = require('child_process');
 const {createStoreValue, getValueFromStore, deleteValueFromStore, addPlayer} = require('./store');
-const {testTopics, testStories} = require('./test-data');
+const {testTopics, testeStories} = require('./test-data');
 
 let id = 0;
 
@@ -21,7 +21,7 @@ io.on('connection', (socket) => {
     let [hostName, topic, hostId] = values;
     let newRoom = `room ${id}`;
 
-    socket.join(email);
+    socket.join(hostId);
     socket.join(newRoom, () => {
       socket.emit('receive-game-id', newRoom);
       createStory(topic, socket,output);
