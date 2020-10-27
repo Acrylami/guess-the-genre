@@ -39,7 +39,6 @@ io.on('connection', (socket) => {
         socket.emit('room-state', roomDetails.players);
         socket.to(roomName).emit('user-joined-room', username);
       });
-
     }else{
       socket.emit('room-state', 'room-not-found');
     }
@@ -50,21 +49,19 @@ io.on('connection', (socket) => {
     socket.to(roomName).emit('receive-story',roomDetails.output);
   });
   socket.on('submit-topic-idea', (values) => {
-    let [roomName, ...rest] = values;
+    let [roomName, nickname, topic] = values;
     let roomDetails = getValueFromStore(roomName);
-    socket.to(roomDetails.hostId).emit('receive-topic-idea',rest);
+    console.log('sent ' + nickname + ' ' + topic);
+    socket.to(roomDetails.hostId).emit('receive-topic-idea', nickname, topic);
   });
   socket.on('host-picked-topic', (values) =>{
-    let[roomName, ...rest] = values;
-    socket.to(roomName).emit('receive-winning-topic', rest);
+    let[roomName, topicIdea] = values;
+    socket.to(roomName).emit('receive-winning-topic', topicIdea);
   });
   socket.on('close-room', (roomName) => {
     deleteValueFromStore(roomName);
   })
-
 });
-
-
 
 function createStory(topic,socket){
   let output;
@@ -83,10 +80,7 @@ function createStory(topic,socket){
   //   console.log(`child process close all stdio with code ${code}`);
   //   socket.emit('get-story', output);
   // })
-
 }
-
-
 
 server.listen(5000, () => {
   console.log('server started on port 5000')
