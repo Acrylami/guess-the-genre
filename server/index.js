@@ -5,27 +5,27 @@ const server = require('http').createServer(app);
 const io = require('socket.io')(server);
 const {spawn} = require('child_process');
 const {createStoreValue, getValueFromStore, deleteValueFromStore, addPlayer} = require('./store');
-const {testTopics, testeStories} = require('./test-data');
+const {testTopics, testStories} = require('./test-data');
 
 let id = 0;
 
 io.on('connection', (socket) => {
-  let output;
   console.log('connected to socket.io successfully');
 
   socket.on('get-topic-ideas', () => {
     socket.emit('receive-topic-ideas', testTopics);
   });
   socket.on('create-room', (values) => {
+    let output;
     id++;
     let [hostName, topic, hostId] = values;
     let newRoom = `room ${id}`;
-    createStoreValue(newRoom,hostId,topic,hostName);
 
     socket.join(email);
     socket.join(newRoom, () => {
       socket.emit('receive-game-id', newRoom);
       createStory(topic, socket,output);
+      createStoreValue(newRoom,hostId,topic,hostName, output);
     });
 
   });
@@ -45,7 +45,8 @@ io.on('connection', (socket) => {
 
   });
   socket.on('send-story',(roomName) =>{
-    socket.to(roomName).emit('receive-story',output);
+    let roomDetails = getValueFromStore(roomName);
+    socket.to(roomName).emit('receive-story',roomDetails.output);
   });
   socket.on('submit-topic-idea', (values) => {
     let [roomName, ...rest] = values;
@@ -68,7 +69,7 @@ function createStory(topic,socket,output){
   if(topic === 'sci-fi'){
     topic = 'sci_fi';
   }
-  output = testeStories[topic];
+  output = testStories[topic];
   socket.emit('get-story', output);
   // let python = spawn('python', ['some python file', topic]);
   // python.stdout.on('data', (data) => {

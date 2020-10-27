@@ -1,6 +1,6 @@
 exports.testTopics = ['action','drama','fantasy','sci-fi','horror','crime'];
 
-exports.testeStories = {
+exports.testStories = {
   action: "After John returns to New York, Santino opens a $7 million contract for John's death under the guise of avenging his sister, leading numerous assassins to unsuccessfully attack John. Eventually, Cassian confronts John in the subway. John wins the fight and mortally wounds Cassian, but leaves him alive out of professional respect. Injured and desperate, John seeks help from an underground crime lord known as the Bowery King, whose subordinates treat John's injuries and guide him to an art museum where Santino is holding a gala. John dispatches Santino's henchmen and chases Santino through a mirror exhibit in the museum, where he kills the rest of Santino's men and kills Ares in a final fight. He pursues Santino, who flees to the Continental, where he smugly makes it clear that he intends to remain indefinitely in its sanctuary and he will never cancel Wick's bounty. Despite Winston's warnings, John shoots and kills Santino in the Continental lounge.",
 
   drama: "The next day, while repairing Dalton's TV antenna, Booth reminisces about a sparring contest he had with Bruce Lee on the set of The Green Hornet which resulted in Booth being fired. Meanwhile, Charles Manson stops by the Polanski residence looking for producer Terry Melcher, who used to live there, but is turned away by Jay Sebring. Tate goes for errands and stops at a movie theater to watch herself in the film The Wrecking Crew.
