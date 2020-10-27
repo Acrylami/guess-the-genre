@@ -37,3 +37,14 @@ const setStory = (story) => {
     });
 };
 
+const getRandomInt = (max) => {
+    return Math.floor(Math.random() * Math.floor(max));
+}
+
+const generateRandomSHA = () => {
+    let ans = '';
+    for (let i = 0; i < 20; i++) {
+        ans += getRandomInt(9);
+    }
+    return ans;
+};

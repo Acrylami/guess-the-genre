@@ -89,7 +89,7 @@ const fillGameDetails = () => {
 const createRoom = () => {
     let topic = gameState.topic;
     let hostNickname = find('.submit-host-nickname').value;
-    socket.emit('create-room', [hostNickname, topic, 'fake@email.com']);
+    socket.emit('create-room', [hostNickname, topic, generateRandomSHA()]);
 
     socket.on('receive-game-id', (id) => {
         gameState.id = id;
