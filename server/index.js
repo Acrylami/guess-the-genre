@@ -5,7 +5,7 @@ const server = require('http').createServer(app);
 const io = require('socket.io')(server);
 const {spawn} = require('child_process');
 const {createStoreValue, getValueFromStore, deleteValueFromStore, addPlayer} = require('./store');
-const {testTopics, testeStories} = require('./test-data');
+const {testTopics, testStories} = require('./test-data');
 
 let id = 0;
 
