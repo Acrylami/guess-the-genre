@@ -1,7 +1,7 @@
 import sys
 import text_generate
 
-genres=["horror","crime","fantasy","sicfi","romance"]
+genres=["horror","crime","fantasy","sicfi","superhero"]
 
 def connect(genre=sys.argv[1]):
     text_gen=text_generate.textgen()
