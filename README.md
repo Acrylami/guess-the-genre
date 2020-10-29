@@ -4,7 +4,7 @@
 [![MIT Licenced](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/sprint2-gamedev/game-sprint/blob/master/LICENSE)
 
 
-<img src="https://github.com/MLH-Sprint-1/mlh-sprint-1/blob/master/GTG.png"/>
+<img src="https://github.com/sprint2-gamedev/game-sprint/blob/master/GTG_logo.gif"/>
 
 
 What if you coukd ask a machine to generate a whole TV Script for you? and then challenge your friends to guess the genre?
