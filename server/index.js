@@ -94,6 +94,7 @@ function createStory(topic,socket,newRoom,hostId,hostName){
   // socket.emit('get-story', output);
   // return output;
   console.log(topic);
+  createStoreValue(newRoom,hostId,topic,hostName, output);
   let python = spawn('python', ['../nlp/connect_backend.py', `${topic}`], {cwd: path.join(__dirname, '../nlp')});
   python.stdout.on('data', (data) => {
     console.log('pipe data from python script');
