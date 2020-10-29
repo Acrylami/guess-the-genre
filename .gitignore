@@ -8,3 +8,8 @@ server/.env
 # Vim swap files from Jorres' machine
 *.sw*
 
+# .vscode
+.vscode
+
+#pycache
+__pycache__
