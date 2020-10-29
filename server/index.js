@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const path = require('path');
 const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
@@ -9,24 +10,30 @@ const {testTopics, testStories} = require('./test-data');
 
 let id = 0;
 
+app.use(express.static(path.join(__dirname, '../frontend')));
+
+app.get('/', (req,res)=>{
+  res.sendFile(path.join(__dirname, '../frontend', 'index.html'))
+});
+
 io.on('connection', (socket) => {
   console.log('connected to socket.io successfully');
 
   socket.on('get-topic-ideas', () => {
-    socket.emit('receive-topic-ideas', testTopics);
+    //socket.emit('receive-topic-ideas', ["horror","crime","fantasy","sicfi","superhero"]);
+    getTopics(socket);
   });
   socket.on('create-room', (values) => {
-    let output;
     id++;
     let [hostName, topic, hostId] = values;
     let newRoom = `room ${id}`;
 
     socket.join(hostId);
-    socket.join(newRoom, () => {
+    socket.join(newRoom,() => {
       socket.emit('receive-game-id', newRoom);
       socket.emit('user-joined-room', hostName);
-      output = createStory(topic, socket);
-      createStoreValue(newRoom,hostId,topic,hostName, output);
+      createStory(topic, socket,newRoom,hostId,hostName);
+
     });
 
   });
@@ -46,7 +53,10 @@ io.on('connection', (socket) => {
   });
   socket.on('send-story',(roomName) =>{
     let roomDetails = getValueFromStore(roomName);
+    if(roomDetails){
     socket.to(roomName).emit('receive-story',roomDetails.output);
+    }
+
   });
   socket.on('submit-topic-idea', (values) => {
     let [roomName, nickname, topic] = values;
@@ -63,23 +73,42 @@ io.on('connection', (socket) => {
   })
 });
 
-function createStory(topic,socket){
+function getTopics(socket){
   let output;
-  if(topic === 'sci-fi'){
-    topic = 'sci_fi';
-  }
-  output = testStories[topic];
-  socket.emit('get-story', output);
-  return output;
-  // let python = spawn('python', ['some python file', topic]);
-  // python.stdout.on('data', (data) => {
-  //   console.log('pipe data from python script');
-  //   output = data.toString();
-  // });
-  // python.on('close', (code) => {
-  //   console.log(`child process close all stdio with code ${code}`);
-  //   socket.emit('get-story', output);
-  // })
+  let python = spawn('python', ['../nlp/connect_backend.py', "get-topics"]);
+  python.stdout.on('data', (data) => {
+    console.log('pipe data from python script');
+    output = data.toString();
+  });
+  python.on('close', (code) => {
+    console.log(`child process close all stdio with code ${code}`);
+    output = output.split("|");
+    console.log("topics",output);
+    socket.emit('receive-topic-ideas', output);
+  })
+}
+
+function createStory(topic,socket,newRoom,hostId,hostName){
+  let output;
+  // output = testStories[topic];
+  // socket.emit('get-story', output);
+  // return output;
+  console.log(topic);
+  let python = spawn('python', ['../nlp/connect_backend.py', `${topic}`], {cwd: path.join(__dirname, '../nlp')});
+  python.stdout.on('data', (data) => {
+    console.log('pipe data from python script');
+    output = data.toString();
+    console.log(output);
+  });
+  python.on('close', (code) => {
+    console.log(`child process close all stdio with code ${code}`);
+    console.log('story',output);
+    socket.emit('get-story', output);
+    createStoreValue(newRoom,hostId,topic,hostName, output);
+    //socket.to(roomName).emit('receive-story',output);
+  });
+
+
 }
 
 server.listen(5000, () => {

@@ -1,25 +1,33 @@
 import sys
 import text_generate
 
-genres=["horror","crime","fantasy","sicfi","romance"]
+genres=["horror","crime","fantasy","sicfi","superhero"]
 
-def connect(genre=sys.argv[1]):
+def connect(genre):
     text_gen=text_generate.textgen()
 
     if genre=="horror":
-        print(textgen.horror())
-    
+        print(text_gen.horror())
+
     if genre=="crime":
-        print(textgen.crime())
-    
+        print(text_gen.crime())
+
     if genre=="fantasy":
-        print(textgen.fantasy())
-    
+        print(text_gen.fantasy())
+
     if genre=="scifi":
-        print(textgen.fantasy())
-    
-    if genre=="romance":
-        print(textgen.fantasy())
+        print(text_gen.scifi())
+
+    if genre=="superhero":
+        print(text_gen.superhero())
 
     if genre=="get-topics":
-        print(genres)
+        data = ""
+        for i in genres:
+            if i == "superhero":
+                data += i
+            else:
+                data += i + "|"
+        print(data)
+
+connect(sys.argv[1])
