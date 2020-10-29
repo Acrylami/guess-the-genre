@@ -61,7 +61,6 @@ io.on('connection', (socket) => {
   socket.on('submit-topic-idea', (values) => {
     let [roomName, nickname, topic] = values;
     let roomDetails = getValueFromStore(roomName);
-    console.log('sent ' + nickname + ' ' + topic);
     socket.to(roomDetails.hostId).emit('receive-topic-idea', nickname, topic);
   });
   socket.on('host-picked-topic', (values) =>{
@@ -83,7 +82,6 @@ function getTopics(socket){
   python.on('close', (code) => {
     console.log(`child process close all stdio with code ${code}`);
     output = output.split("|");
-    console.log("topics",output);
     socket.emit('receive-topic-ideas', output);
   })
 }
@@ -103,7 +101,6 @@ function createStory(topic,socket,newRoom,hostId,hostName){
   });
   python.on('close', (code) => {
     console.log(`child process close all stdio with code ${code}`);
-    console.log('story',output);
     socket.emit('get-story', output);
     createStoreValue(newRoom,hostId,topic,hostName, output);
     //socket.to(roomName).emit('receive-story',output);
