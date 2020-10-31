@@ -82,6 +82,11 @@ GTG doesn't stop here, we will keep continue working on that. We hope to bring m
 
 ☀️ GTG with images
 
+# Demo Videos :computer:
+
+[Link](https://youtu.be/wsnAcxcjemc) to overview of the idea
+[Link](https://youtu.be/f7qFLJCpqKM) to the game in actiion
+
 # Team 👋
 
 GTG came to reality with the contributions from
